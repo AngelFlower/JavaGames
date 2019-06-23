@@ -28,7 +28,7 @@ public class Raqueta_2 {
     }
     
     public void move(){
-        if(Y+200 >= mainclass.ancho){
+        if(Y+200 >= mainclass.ancho-62){
             //Y = mainclass.ancho-221;
             velocidadY = -7;
             Y += velocidadY;

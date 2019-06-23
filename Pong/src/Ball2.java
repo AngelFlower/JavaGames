@@ -17,8 +17,8 @@ public class Ball2 {
     
     int y = mainclass.ancho/2;
     int x = mainclass.largo/2;
-    int velocidadX = 11;
-    int velocidadY = -11; 
+    int velocidadX = 8;
+    int velocidadY = -8; 
     
     private mainclass main;
     
