@@ -16,7 +16,9 @@ import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.JSpinner.DefaultEditor;
 import javax.swing.JTextField;
@@ -45,6 +47,7 @@ public class mainclass extends JPanel implements Runnable{
     Ball2 Pelota2 = new Ball2(this);
     int ScoreP1 = 0;
     int ScoreP2 = 0;
+    int frames = 29;
     double numBalls = 1.0;
     boolean inGame = true;
     int i = 0;
@@ -62,6 +65,7 @@ public class mainclass extends JPanel implements Runnable{
     Graphics g;
 
     JLabel labelNumBalls = new JLabel("Balls number: ");
+    JLabel labelSpeed = new JLabel("Speed: ");
     
     JButton btnStart = new JButton("Play/Pause");
     JButton btnRestart = new JButton("Restart");
@@ -70,6 +74,7 @@ public class mainclass extends JPanel implements Runnable{
     SpinnerNumberModel model1 = new SpinnerNumberModel(1, 0, 2, 1.0);  
     JSpinner SpinnerNumBalls = new JSpinner(model1);
     JTextField txtNumBalls = new JTextField(1);
+    JSlider Slider = new JSlider();
     
     public mainclass(){
         initComponets();
@@ -85,7 +90,7 @@ public class mainclass extends JPanel implements Runnable{
             public void keyPressed(KeyEvent e) {
                Raqueta1.keyPressed(e);
                Raqueta2.keyPressed(e);
-               if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
+               if(e.getKeyCode() == KeyEvent.VK_SPACE)
                     inGame = !inGame;
             }
 
@@ -147,6 +152,21 @@ public class mainclass extends JPanel implements Runnable{
             }
         });
         add(SpinnerNumBalls);
+        
+        labelSpeed.setBounds(377,ancho-63, 55, 30);
+        labelSpeed.setFocusable(false);
+        add(labelSpeed);
+        
+        Slider.setBounds(427,ancho-61, 120, 30);
+        Slider.setValue(1);
+        Slider.setFocusable(false);
+        Slider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent ce) {
+                SliderstateChanged(ce);
+            }
+        });
+        add(Slider);
     }
     
     private void btnStartActionPerformed(ActionEvent e){
@@ -158,6 +178,10 @@ public class mainclass extends JPanel implements Runnable{
     }
     
     private void btnRestartActionPerformed(ActionEvent e){
+        restart();
+    }
+    
+    private void restart(){
         ScoreP1 = 0;
         ScoreP2 = 0;
         Pelota.x = largo/2;
@@ -175,6 +199,49 @@ public class mainclass extends JPanel implements Runnable{
     private void SpinnerNumBallsstateChanged(ChangeEvent e){
         numBalls = (double) SpinnerNumBalls.getValue();
         this.requestFocus();
+    }
+    
+    private void SliderstateChanged(ChangeEvent e){
+        System.out.println(""+Slider.getValue());
+        if(Slider.getValue() >=1 && 10<= Slider.getValue()){
+            frames = 29;
+        }
+        if(Slider.getValue() >=11 && 20< Slider.getValue()){
+            frames = 27;
+        }
+        if(Slider.getValue() >21 && 30< Slider.getValue()){
+            frames = 25;
+        }
+        if(Slider.getValue() >31 && 40< Slider.getValue()){
+            frames = 23;
+        }
+        if(Slider.getValue() >41 && 50< Slider.getValue()){
+            frames = 21;
+        }
+        if(Slider.getValue() >51 && 60< Slider.getValue()){
+            frames = 19;
+        }
+        if(Slider.getValue() >61 && 70< Slider.getValue()){
+            frames = 17;
+        }
+        if(Slider.getValue() >71 && 80< Slider.getValue()){
+            frames = 15;
+        }
+        if(Slider.getValue() >81 && 90< Slider.getValue()){
+            frames = 13;
+        }
+        if(Slider.getValue() >91 && 100< Slider.getValue()){
+            frames = 11;
+        }
+        
+        /*
+        switch (Slider.getValue()){
+            case 1 :
+                frames = 29;
+            case 10  :
+                frames = 29;
+        }
+        */
     }
     
     public void move() {
@@ -248,7 +315,7 @@ public class mainclass extends JPanel implements Runnable{
         Raqueta1.paint(g2d,0);
         Raqueta2.paint(g2d,(largo-30));
         g2d.setColor(Color.white);
-        g2d.drawLine(largo/2, 0, largo/2, ancho);
+        g2d.drawLine(largo/2, 0, largo/2, ancho-67);
         if(numBalls>0){
             Pelota.paint(g2d);
             if(numBalls>1){
@@ -257,6 +324,8 @@ public class mainclass extends JPanel implements Runnable{
         }
         g2d.drawString( " " +ScoreP1,460,40);
         g2d.drawString( " " +ScoreP2,540,40);
+        g2d.drawString( "Player 1" ,60,40);
+        g2d.drawString( "Player 2" ,860,40);
         }
     }
     
@@ -291,6 +360,16 @@ public class mainclass extends JPanel implements Runnable{
         
     }
     
+    private int winner(){
+        int WinnerInt = 0;
+        if(ScoreP1 == 5){
+            WinnerInt = 1;
+        }
+        else if(ScoreP2 == 5){
+            WinnerInt = 2;
+        }
+        return WinnerInt;
+    }
     
     @Override
     public void run() {
@@ -298,23 +377,40 @@ public class mainclass extends JPanel implements Runnable{
             game.move();
             game.repaint();
             try {
-                Thread.sleep(2000);
+                Thread.sleep(1600);
             } catch (InterruptedException ex) {
                 Logger.getLogger(mainclass.class.getName()).log(Level.SEVERE, null, ex);
             }
             i++;
         }
         inGame = false;
-        System.out.println(""+inGame);
+        //System.out.println(""+inGame);
         while(true){
             //System.out.println("asd");
             try {
-                Thread.sleep(30);
-                        } catch (InterruptedException ex) {
+                Thread.sleep(frames);
+            } catch (InterruptedException ex) {
                 Logger.getLogger(mainclass.class.getName()).log(Level.SEVERE, null, ex);
             }
+            if(winner() != 0){
+                JOptionPane.showMessageDialog(null, "Winner: Player "+winner());
+                ScoreP1 = 0;
+                ScoreP2 = 0;
+                Pelota.x = largo/2;
+                Pelota.y = ancho/2;
+                Pelota2.x = largo/2;
+                Pelota2.y = ancho/2;
+                Raqueta1.Y = Ry;
+                Raqueta2.Y = Ry;
+                Raqueta1.velocidadY = 0;
+                Raqueta2.velocidadY = 0;
+                SpinnerNumBalls.setValue(1.0);
+                numBalls = 1;
+                inGame = false;
+                
+            }
             if(inGame){
-                System.out.println(""+inGame);
+                //System.out.println(""+inGame);
                 game.move();
                 game.repaint();
  
