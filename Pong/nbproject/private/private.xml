@@ -3,9 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/angel/Proyectos/JavaGames/Pong/src/mainclass.java</file>
-            <file>file:/home/angel/Proyectos/JavaGames/Pong/src/Ball.java</file>
-            <file>file:/home/angel/Proyectos/JavaGames/Pong/src/Raqueta_2.java</file>
+            <file>file:/home/angel/Proyectos/JavaGames/Pong/src/herramientas/CargadorDeRecursos.java</file>
+            <file>file:/home/angel/Proyectos/JavaGames/Pong/src/main/mainclass.java</file>
+            <file>file:/home/angel/Proyectos/JavaGames/Pong/src/main/About.java</file>
+            <file>file:/home/angel/Proyectos/JavaGames/Pong/src/herramientas/Sound.java</file>
         </group>
     </open-files>
 </project-private>
